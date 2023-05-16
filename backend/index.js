@@ -12,24 +12,14 @@ app.get('/', (req, res) => res.send('The ducks are coming!'));
 
 // General middlewares
 app.use(express.json());
-const corsOptions = {
-  origin: 'https://localhost:3001'
-};
-app.use(cors(corsOptions));
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-// app.use(cors({
-//     credentials: true,
-//     origin: [
-//       'https://localhost:3001',
-      
-//     ],
-//   })
-// );
+app.use(
+  cors({
+    credentials: true,
+    origin: [
+      'http://localhost:5173',
+    ],
+  })
+);
 app.use(cookieParser());
 
 // Routes

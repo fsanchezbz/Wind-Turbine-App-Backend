@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     minLength: 6,
     maxLength: 1024,
-  },
+    select: false,
+  },  
   firstName: {
     type: String,
     required: true,
@@ -26,6 +27,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'], // Add more roles if needed
+    default: 'user',
   },
 });
 
