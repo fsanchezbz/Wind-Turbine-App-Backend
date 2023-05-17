@@ -82,6 +82,7 @@ const getOneUser = async (req, res, next) => {
 
 const logout = (req, res, next) => {
   try {
+    console.log('clearCookie');
     res
       .clearCookie('token', { path: '/', sameSite: 'none', secure: true })
       .sendStatus(200);

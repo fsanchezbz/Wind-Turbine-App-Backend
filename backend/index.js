@@ -3,6 +3,7 @@ const app = express();
 const port = process.env.PORT;
 require('./db')();
 const userRouter = require('./routes/userRoutes');
+const workRouter = require('./routes/workOrderRouter');
 const errorHandler = require('./middlewares/errorHandler');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -17,6 +18,8 @@ app.use(
     credentials: true,
     origin: [
       'http://localhost:5173',
+      /https:\/\/profound-dasik-d1357e\.netlify\.app/
+      
     ],
   })
 );
@@ -24,6 +27,7 @@ app.use(cookieParser());
 
 // Routes
 app.use('/users', userRouter);
+app.use('/work', workRouter);
 
 // Error handling
 app.use(errorHandler);
