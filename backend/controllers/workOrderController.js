@@ -1,4 +1,4 @@
-const WorkOrder = require('../models/workOrderSchema');
+const WorkOrder = require('../models/workSchema');
 
 // Get all work orders
 const getAllWorkOrders = async (req, res) => {
