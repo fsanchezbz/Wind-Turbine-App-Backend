@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 4005; 
 require('./db')();
 const userRouter = require('./routes/userRoutes');
 const workRouter = require('./routes/workOrderRouter');
@@ -32,4 +32,4 @@ app.use('/work', workRouter);
 // Error handling
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Server up on port ${port}`));
+app.listen(port, () => console.log(`Server up on port http://localhost/${port}`));

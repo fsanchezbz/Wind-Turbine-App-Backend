@@ -12,3 +12,5 @@ workRouter.patch('/work-orders/:id', updateWorkOrder);
 workRouter.delete('/work-orders/:id', deleteWorkOrder);
 
 module.exports = workRouter;
+
+module.exports = workRouter;
