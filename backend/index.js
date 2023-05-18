@@ -7,7 +7,7 @@ const workRouter = require('./routes/workOrderRouter');
 const errorHandler = require('./middlewares/errorHandler');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const imagesRouter = require('./imagesRouter');
+const imagesRouter = require('./routes/imagesRouter');
 // Greet on root route
 app.get('/', (req, res) => res.send('The ducks are coming!'));
 
