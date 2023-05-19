@@ -66,19 +66,29 @@ const createUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { role, isAdmin } = req.body;
+    const { userName, firstName, lastName, email, password, isAdmin, profileImage } = req.body;
 
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      { role, isAdmin },
-      { new: true }
-    );
+    // Create an object to hold the updated fields
+    const updatedFields = {};
+    if (userName) updatedFields.userName = userName;
+    if (firstName) updatedFields.firstName = firstName;
+    if (lastName) updatedFields.lastName = lastName;
+    if (email) updatedFields.email = email;
+    if (password) {
+      const hash = await bcrypt.hash(password, 10);
+      updatedFields.password = hash;
+    }
+    if (isAdmin !== undefined) updatedFields.isAdmin = isAdmin;
+    if (profileImage) updatedFields.profileImage = profileImage;
+
+    const updatedUser = await User.findByIdAndUpdate(id, updatedFields, { new: true });
 
     res.status(200).json(updatedUser);
   } catch (error) {
     next(error);
   }
 };
+
 
 
 const getAllUsers = async (req, res, next) => {
