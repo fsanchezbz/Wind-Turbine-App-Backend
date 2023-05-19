@@ -80,7 +80,7 @@ const deleteWorkOrder = async (req, res) => {
       return res.status(404).json({ message: 'Work order not found' });
     }
 
-    await workOrder.remove();
+    await WorkOrder.deleteOne({ _id: req.params.id });
     res.json({ message: 'Work order deleted' });
   } catch (error) {
     res.status(500).json({ message: error.message });
