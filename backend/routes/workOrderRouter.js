@@ -4,12 +4,13 @@ const {
   createWorkOrder,
   updateWorkOrder,
   deleteWorkOrder,
+  getOneWork
 } = require('../controllers/workOrderController');
 
-workRouter.get('/all', getAllWorkOrders);
-workRouter.post('/work-orders', createWorkOrder);
-workRouter.patch('/work-orders/:id', updateWorkOrder);
-workRouter.delete('/work-orders/:id', deleteWorkOrder);
-
+workRouter.route('/all').get(getAllWorkOrders);
+workRouter.route('/work-orders').post( createWorkOrder);
+workRouter.route('/update/:id').put(updateWorkOrder);
+workRouter.route('/delete/:id').delete( deleteWorkOrder);
+workRouter.route('/:id').get(getOneWork);
 module.exports = workRouter;
 
