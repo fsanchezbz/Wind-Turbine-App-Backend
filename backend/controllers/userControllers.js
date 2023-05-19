@@ -32,7 +32,7 @@ const login = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    const { userName, firstName, lastName, email, password, isAdmin } = req.body;
+    const { userName, firstName, lastName, email, password, isAdmin, profileImage } = req.body;
     if (!userName || !firstName || !lastName || !email || !password)
       throw new ErrorStatus('Missing fields', 400);
 
@@ -45,6 +45,7 @@ const createUser = async (req, res, next) => {
       email,
       password: hash,
       isAdmin: isAdmin || false, // Set isAdmin to the provided value or default to false
+      profileImage, // Store the profile image URL in the user document
     });
 
     const token = jwt.sign({ _id: newUser._id, isAdmin: newUser.isAdmin }, process.env.JWT_SECRET);
@@ -61,6 +62,37 @@ const createUser = async (req, res, next) => {
     next(error);
   }
 };
+
+const updateUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { userName, firstName, lastName, email, password, isAdmin, profileImage } = req.body;
+
+    // Create an object to hold the updated fields
+    const updatedFields = {};
+    if (userName) updatedFields.userName = userName;
+    if (firstName) updatedFields.firstName = firstName;
+    if (lastName) updatedFields.lastName = lastName;
+    if (email) updatedFields.email = email;
+    if (password) {
+      const hash = await bcrypt.hash(password, 10);
+      updatedFields.password = hash;
+    }
+    if (isAdmin !== undefined) updatedFields.isAdmin = isAdmin;
+    if (profileImage) updatedFields.profileImage = profileImage;
+
+    const updatedUser = await User.findByIdAndUpdate(id, updatedFields, { new: true });
+
+    console.log('Updated user:', updatedUser);
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
 
 const getAllUsers = async (req, res, next) => {
   try {
@@ -91,4 +123,4 @@ const logout = (req, res, next) => {
   }
 };
 
-module.exports = { login, getOneUser, createUser, logout, getAllUsers };
+module.exports = { login, getOneUser, createUser, logout, getAllUsers,  updateUser  };
