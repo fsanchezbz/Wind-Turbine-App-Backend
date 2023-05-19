@@ -63,6 +63,23 @@ const createUser = async (req, res, next) => {
   }
 };
 
+const updateUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { role, isAdmin } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { role, isAdmin },
+      { new: true }
+    );
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 const getAllUsers = async (req, res, next) => {
   try {
@@ -93,4 +110,4 @@ const logout = (req, res, next) => {
   }
 };
 
-module.exports = { login, getOneUser, createUser, logout, getAllUsers };
+module.exports = { login, getOneUser, createUser, logout, getAllUsers,  updateUser  };
