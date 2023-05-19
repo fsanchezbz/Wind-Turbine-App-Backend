@@ -83,12 +83,14 @@ const updateUser = async (req, res, next) => {
 
     const updatedUser = await User.findByIdAndUpdate(id, updatedFields, { new: true });
 
+    console.log('Updated user:', updatedUser);
+
     res.status(200).json(updatedUser);
   } catch (error) {
     next(error);
   }
-  console.log(updateUser);
 };
+
 
 
 
