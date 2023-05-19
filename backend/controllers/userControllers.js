@@ -45,6 +45,7 @@ const createUser = async (req, res, next) => {
       email,
       password: hash,
       isAdmin: isAdmin || false, // Set isAdmin to the provided value or default to false
+      profileImage: '', // Initialize the profile image field with an empty string
     });
 
     const token = jwt.sign({ _id: newUser._id, isAdmin: newUser.isAdmin }, process.env.JWT_SECRET);
@@ -61,6 +62,7 @@ const createUser = async (req, res, next) => {
     next(error);
   }
 };
+
 
 const getAllUsers = async (req, res, next) => {
   try {
