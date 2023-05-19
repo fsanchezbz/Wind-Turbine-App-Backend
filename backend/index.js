@@ -8,7 +8,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 // Greet on root route
-app.get('/', (req, res) => res.send('The ducks are coming!'));
+app.get('/', (req, res) => res.send('2023 PJ TurbinePro GmbH. All rights reserved.'));
 
 // General middlewares
 app.use(express.json());
