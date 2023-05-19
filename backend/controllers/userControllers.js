@@ -35,9 +35,12 @@ const createUser = async (req, res, next) => {
     const { userName, firstName, lastName, email, password, isAdmin } = req.body;
     if (!userName || !firstName || !lastName || !email || !password)
       throw new ErrorStatus('Missing fields', 400);
-
+      if (!req.file) {
+        throw new ErrorStatus('No file uploaded', 400);
+      }
     const hash = await bcrypt.hash(password, 10);
-
+    const result = await cloudinary.uploader.upload(req.file.path);
+    
     const newUser = await User.create({
       userName,
       firstName,
@@ -45,7 +48,7 @@ const createUser = async (req, res, next) => {
       email,
       password: hash,
       isAdmin: isAdmin || false, // Set isAdmin to the provided value or default to false
-      profileImage: '', // Initialize the profile image field with an empty string
+      profileImage: result.secure_url, // Initialize the profile image field with an empty string
     });
 
     const token = jwt.sign({ _id: newUser._id, isAdmin: newUser.isAdmin }, process.env.JWT_SECRET);
