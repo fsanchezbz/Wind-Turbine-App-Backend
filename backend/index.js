@@ -16,6 +16,7 @@ app.use(
   cors({
     credentials: true,
     origin: [
+      'http://localhost:5173',
       'https://wind-turbine-app-backend.onrender.com/',
       /https:\/\/profound-dasik-d1357e\.netlify\.app/
       
