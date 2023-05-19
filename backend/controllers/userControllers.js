@@ -32,7 +32,7 @@ const login = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    const { userName, firstName, lastName, email, password, isAdmin } = req.body;
+    const { userName, firstName, lastName, email, password, isAdmin, profileImage } = req.body;
     if (!userName || !firstName || !lastName || !email || !password)
       throw new ErrorStatus('Missing fields', 400);
 
@@ -45,6 +45,7 @@ const createUser = async (req, res, next) => {
       email,
       password: hash,
       isAdmin: isAdmin || false, // Set isAdmin to the provided value or default to false
+      profileImage, // Store the profile image URL in the user document
     });
 
     const token = jwt.sign({ _id: newUser._id, isAdmin: newUser.isAdmin }, process.env.JWT_SECRET);
@@ -61,6 +62,7 @@ const createUser = async (req, res, next) => {
     next(error);
   }
 };
+
 
 const getAllUsers = async (req, res, next) => {
   try {
