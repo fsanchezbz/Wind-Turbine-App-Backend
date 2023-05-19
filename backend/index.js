@@ -28,7 +28,7 @@ app.use(cookieParser());
 // Routes
 app.use('/users', userRouter);
 app.use('/work', workRouter);
-app.use('/api', imagesRouter);
+// app.use('/api', imagesRouter);
 // Error handling
 app.use(errorHandler);
 
