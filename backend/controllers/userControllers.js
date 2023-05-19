@@ -63,33 +63,33 @@ const createUser = async (req, res, next) => {
   }
 };
 
-const updateUser = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const { userName, firstName, lastName, email, password, isAdmin, profileImage } = req.body;
+// const updateUser = async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const { userName, firstName, lastName, email, password, isAdmin, profileImage } = req.body;
 
-    // Create an object to hold the updated fields
-    const updatedFields = {};
-    if (userName) updatedFields.userName = userName;
-    if (firstName) updatedFields.firstName = firstName;
-    if (lastName) updatedFields.lastName = lastName;
-    if (email) updatedFields.email = email;
-    if (password) {
-      const hash = await bcrypt.hash(password, 10);
-      updatedFields.password = hash;
-    }
-    if (isAdmin !== undefined) updatedFields.isAdmin = isAdmin;
-    if (profileImage) updatedFields.profileImage = profileImage;
+//     // Create an object to hold the updated fields
+//     const updatedFields = {};
+//     if (userName) updatedFields.userName = userName;
+//     if (firstName) updatedFields.firstName = firstName;
+//     if (lastName) updatedFields.lastName = lastName;
+//     if (email) updatedFields.email = email;
+//     if (password) {
+//       const hash = await bcrypt.hash(password, 10);
+//       updatedFields.password = hash;
+//     }
+//     if (isAdmin !== undefined) updatedFields.isAdmin = isAdmin;
+//     if (profileImage) updatedFields.profileImage = profileImage;
 
-    const updatedUser = await User.findByIdAndUpdate(id, updatedFields, { new: true });
+//     const updatedUser = await User.findByIdAndUpdate(id, updatedFields, { new: true });
 
-    console.log('Updated user:', updatedUser);
+//     console.log('Updated user:', updatedUser);
 
-    res.status(200).json(updatedUser);
-  } catch (error) {
-    next(error);
-  }
-};
+//     res.status(200).json(updatedUser);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 
 
