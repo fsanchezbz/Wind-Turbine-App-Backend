@@ -21,6 +21,10 @@ const workOrderSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  addInfo: {
+    type: String,
+    
+  }
 });
 
 const WorkOrder = mongoose.model('WorkOrder', workOrderSchema);

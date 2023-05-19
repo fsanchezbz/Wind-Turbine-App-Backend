@@ -12,22 +12,21 @@ const getAllWorkOrders = async (req, res) => {
 
 // Create a new work order
 const createWorkOrder = async (req, res) => {
-    const workOrder = new WorkOrder({
-      turbineModel: req.body.turbineModel,
-      description: req.body.description,
-      location: req.body.location,
-      technician: req.body.technician,
-      date: req.body.date,
-    });
-  
-    try {
-      const newWorkOrder = await workOrder.save();
-      res.status(201).json(newWorkOrder);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
-  };
-  
+  const workOrder = new WorkOrder({
+    turbineModel: req.body.turbineModel,
+    description: req.body.description,
+    location: req.body.location,
+    technician: req.body.technician,
+    date: req.body.date,
+  });
+
+  try {
+    const newWorkOrder = await workOrder.save();
+    res.status(201).json(newWorkOrder);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 // Update a work order
 const updateWorkOrder = async (req, res) => {
@@ -43,6 +42,7 @@ const updateWorkOrder = async (req, res) => {
     workOrder.location = req.body.location || workOrder.location;
     workOrder.technician = req.body.technician || workOrder.technician;
     workOrder.date = req.body.date || workOrder.date;
+    workOrder.addInfo = req.body.addInfo || workOrder.addInfo; // Added addInfo field
 
     const updatedWorkOrder = await workOrder.save();
     res.json(updatedWorkOrder);
