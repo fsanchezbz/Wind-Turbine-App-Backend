@@ -23,6 +23,10 @@ const workOrderSchema = new mongoose.Schema({
   },
   addInfo: {
     type: String,
+  },
+  status: {
+      type: Boolean,
+      default: false,
     
   }
 });

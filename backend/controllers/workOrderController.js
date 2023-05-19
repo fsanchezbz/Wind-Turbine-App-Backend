@@ -44,6 +44,7 @@ const updateWorkOrder = async (req, res) => {
     workOrder.technician = req.body.technician || workOrder.technician;
     workOrder.date = req.body.date || workOrder.date;
     workOrder.addInfo = req.body.addInfo || workOrder.addInfo;
+    workOrder.status =req.body.status || workOrder.status
     const updatedWorkOrder = await workOrder.save();
     res.json(updatedWorkOrder);
   } catch (error) {
