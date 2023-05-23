@@ -32,7 +32,7 @@ const login = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    const { userName, firstName, lastName, email, password, isAdmin, profileImage } = req.body;
+    const { userName, firstName, lastName, email, password, isAdmin, status , profileImage } = req.body;
     if (!userName || !firstName || !lastName || !email || !password)
       throw new ErrorStatus('Missing fields', 400);
 
@@ -44,11 +44,12 @@ const createUser = async (req, res, next) => {
       lastName,
       email,
       password: hash,
-      isAdmin: isAdmin || false, // Set isAdmin to the provided value or default to false
+      isAdmin: isAdmin || false,// Set isAdmin to the provided value or default to false
+      status: status || false, 
       profileImage, // Store the profile image URL in the user document
     });
 
-    const token = jwt.sign({ _id: newUser._id, isAdmin: newUser.isAdmin }, process.env.JWT_SECRET);
+    const token = jwt.sign({ _id: newUser._id, isAdmin: newUser.isAdmin , status: newUser.status}, process.env.JWT_SECRET);
 
     res
       .cookie('token', token, {
@@ -66,7 +67,7 @@ const createUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { userName, firstName, lastName, email, password, isAdmin, profileImage } = req.body;
+    const { userName, firstName, lastName, email, password, isAdmin, status ,profileImage } = req.body;
 
     // Create an object to hold the updated fields
     const updatedFields = {};
@@ -79,6 +80,7 @@ const updateUser = async (req, res, next) => {
       updatedFields.password = hash;
     }
     if (isAdmin !== undefined) updatedFields.isAdmin = isAdmin;
+    if (status) updatedFields.status = status;
     if (profileImage) updatedFields.profileImage = profileImage;
 
     const updatedUser = await User.findByIdAndUpdate(id, updatedFields, { new: true });
