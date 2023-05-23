@@ -8,9 +8,10 @@ const checkToken = (req, res, next) => {
       throw new ErrorStatus('No token sent!', 400);
     }
 
-    const { _id, isAdmin } = jwt.verify(token, process.env.JWT_SECRET);
+    const { _id, isAdmin , status} = jwt.verify(token, process.env.JWT_SECRET);
     req.userId = _id;
     req.isAdmin = isAdmin;
+    req.status = status;
     next();
   } catch (error) {
     next(error);

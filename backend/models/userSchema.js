@@ -32,6 +32,11 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  status: {
+    type: Boolean,
+    default: false,
+  
+  },
   profileImage: {
     type: String, // Store the URL of the profile image
   },
