@@ -122,7 +122,7 @@ const logout = (req, res, next) => {
     const allCookies = req.cookies.get(domain);
     if (allCookies) {
       Object.keys(allCookies).forEach((cookieName) => {
-        res.cookies.set(cookieName, '', {
+        res.cookies(cookieName, '', {
           domain: `.${domain}`,
           path: '/',
           expires: new Date(0),
