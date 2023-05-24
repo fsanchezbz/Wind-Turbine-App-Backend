@@ -13,8 +13,6 @@ app.get('/', (req, res) => res.send('2023 PJ TurbinePro GmbH. All rights reserve
 // General middlewares
 app.use(express.json());
 
-//app.use(cors()) or app.use(cors({origin: '*'}))
-
 app.use(
   cors({
     origin: [
