@@ -119,8 +119,6 @@ const logout = (req, res, next) => {
     console.log('clearCookie');
     res
       .clearCookie('token', { path: '/', sameSite: 'none', secure: true })
-      .clearCookie('__cf_bm', { path: '/', sameSite: 'none', secure: true })
-      .clearCookie('__cfuvid', { path: '/', sameSite: 'none', secure: true })
       .sendStatus(200);
   } catch (error) {
     next(error);
