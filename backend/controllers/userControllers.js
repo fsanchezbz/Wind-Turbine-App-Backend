@@ -2,6 +2,7 @@ const User = require('../models/userSchema');
 const ErrorStatus = require('../utils/errorStatus');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const cookies = require('cookies');
 
 const login = async (req, res, next) => {
   try {
@@ -116,10 +117,20 @@ const getOneUser = async (req, res, next) => {
 
 const logout = (req, res, next) => {
   try {
-    console.log('clearCookie');
-    res
-      .clearCookie('token', { path: '/', sameSite: 'none', secure: true })
-      .sendStatus(200);
+    const domain = '.cloudinary.com'; // Replace with your domain
+
+    const allCookies = req.cookies.get(domain);
+    if (allCookies) {
+      Object.keys(allCookies).forEach((cookieName) => {
+        res.cookies.set(cookieName, '', {
+          domain: `.${domain}`,
+          path: '/',
+          expires: new Date(0),
+        });
+      });
+    }
+
+    res.sendStatus(200);
   } catch (error) {
     next(error);
   }
