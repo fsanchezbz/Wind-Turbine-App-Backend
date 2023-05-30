@@ -1,4 +1,8 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
+const emailPassword = process.env.EMAIL_PASSWORD;
+const emailAddress = process.env.EMAIL_ADDRESS;
 const app = express();
 const port = process.env.PORT || 5005;
 require('./db')();
@@ -58,6 +62,47 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('User Disconnected', socket.id);
+  });
+});
+
+// Parse JSON bodies for this route
+app.use('/send-notification', bodyParser.json());
+
+// Endpoint for sending notification
+app.post('/send-notification', (req, res) => {
+  const { name, email, message } = req.body;
+
+  // Create a transporter with your email service provider credentials
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: emailAddress,
+      pass: emailPassword,
+    },
+  });
+
+  // Setup email data
+  const mailOptions = {
+    from: email, // Sender's email address is dynamically set based on user input
+    to: emailAddress,
+    subject: 'New Notification',
+    text: `
+      You have received a new notification from your website:
+      Name: ${name}
+      Email: ${email}
+      Message: ${message}
+    `,
+  };
+
+  // Send email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      res.status(500).send('Error sending notification');
+    } else {
+      console.log('Notification sent successfully');
+      res.sendStatus(200);
+    }
   });
 });
 

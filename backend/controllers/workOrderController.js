@@ -12,22 +12,29 @@ const getAllWorkOrders = async (req, res) => {
 
 // Create a new work order
 const createWorkOrder = async (req, res) => {
-    const workOrder = new WorkOrder({
-      turbineModel: req.body.turbineModel,
-      description: req.body.description,
-      location: req.body.location,
-      technician: req.body.technician,
-      date: req.body.date,
-    });
-  
-    try {
-      const newWorkOrder = await workOrder.save();
-      res.status(201).json(newWorkOrder);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
-  };
-  
+  const workOrder = new WorkOrder({
+    turbineModel: req.body.turbineModel,
+    description: req.body.description,
+    location: req.body.location,
+    technician: req.body.technician,
+    date: req.body.date,
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
+    requestDetails: req.body.requestDetails,
+    bestTimes: req.body.bestTimes,
+    completionDate: req.body.completionDate,
+    addInfo: req.body.addInfo,
+    status: req.body.status,
+  });
+
+  try {
+    const newWorkOrder = await workOrder.save();
+    res.status(201).json(newWorkOrder);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 // Update a work order
 const updateWorkOrder = async (req, res) => {
@@ -38,39 +45,26 @@ const updateWorkOrder = async (req, res) => {
       return res.status(404).json({ message: 'Work order not found' });
     }
 
+    workOrder.name = req.body.name || workOrder.name;
+    workOrder.email = req.body.email || workOrder.email;
+    workOrder.phone = req.body.phone || workOrder.phone;
+    workOrder.requestDetails = req.body.requestDetails || workOrder.requestDetails;
+    workOrder.location = req.body.location || workOrder.location;
+    workOrder.bestTimes = req.body.bestTimes || workOrder.bestTimes;
+    workOrder.completionDate = req.body.completionDate || workOrder.completionDate;
     workOrder.turbineModel = req.body.turbineModel || workOrder.turbineModel;
     workOrder.description = req.body.description || workOrder.description;
-    workOrder.location = req.body.location || workOrder.location;
     workOrder.technician = req.body.technician || workOrder.technician;
     workOrder.date = req.body.date || workOrder.date;
     workOrder.addInfo = req.body.addInfo || workOrder.addInfo;
-    workOrder.status =req.body.status || workOrder.status
+    workOrder.status = req.body.status || workOrder.status;
+
     const updatedWorkOrder = await workOrder.save();
     res.json(updatedWorkOrder);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
-
-// Update a work order
-// const updateWorkOrder = async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       const { turbineModel, description, location, technician, date,  addInfo } = req.body;
-//       const updatedFields = {};
-//       if (turbineModel) updatedFields.turbineModel = turbineModel;
-//       if (description) updatedFields.description = description;
-//       if (location) updatedFields.location = location;
-//       if (technician) updatedFields.technician = technician;
-//       if (date) updatedFields.date = date;
-//       if (addInfo) updatedFields.addInfo = addInfo;
-  
-//       const updatedWorkOrder = await WorkOrder.findByIdAndUpdate(id, updatedFields, { new: true });
-//       res.status(200).json(updatedWorkOrder);
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
 
 // Delete a work order
 const deleteWorkOrder = async (req, res) => {
@@ -90,23 +84,23 @@ const deleteWorkOrder = async (req, res) => {
 
 // Get a specific work order
 const getOneWork = async (req, res) => {
-    try {
-      const workOrder = await WorkOrder.findById(req.params.id);
-  
-      if (!workOrder) {
-        return res.status(404).json({ message: 'Work order not found' });
-      }
-  
-      res.json(workOrder);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+  try {
+    const workOrder = await WorkOrder.findById(req.params.id);
+
+    if (!workOrder) {
+      return res.status(404).json({ message: 'Work order not found' });
     }
-  };
+
+    res.json(workOrder);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 module.exports = {
   getAllWorkOrders,
   createWorkOrder,
   updateWorkOrder,
   deleteWorkOrder,
-  getOneWork
+  getOneWork,
 };
