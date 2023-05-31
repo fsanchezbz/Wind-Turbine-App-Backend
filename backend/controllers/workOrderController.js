@@ -13,6 +13,7 @@ const getAllWorkOrders = async (req, res) => {
 // Create a new work order
 const createWorkOrder = async (req, res) => {
   const workOrder = new WorkOrder({
+    orderId: req.body.orderId,
     turbineModel: req.body.turbineModel,
     description: req.body.description,
     location: req.body.location,
@@ -44,7 +45,7 @@ const updateWorkOrder = async (req, res) => {
     if (!workOrder) {
       return res.status(404).json({ message: 'Work order not found' });
     }
-
+    workOrder.orderId = req.body.orderId || workOrder.orderId;
     workOrder.name = req.body.name || workOrder.name;
     workOrder.email = req.body.email || workOrder.email;
     workOrder.phone = req.body.phone || workOrder.phone;

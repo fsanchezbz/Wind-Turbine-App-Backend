@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const workOrderSchema = new mongoose.Schema({
+  orderId: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
