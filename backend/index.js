@@ -23,23 +23,15 @@ app.use(express.json());
 app.use(cookieParser());
 
 // CORS configuration
-const corsOptions = {
+app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://profound-dasik-d1357e.netlify.app',
-    res.header("Access-Control-Allow-Origin")
+    'https://profound-dasik-d1357e.netlify.app'
   ],
   credentials: true,
   optionSuccessStatus: 200
-};
-app.use(cors(corsOptions));
-
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "http://localhost:5173", 'https://profound-dasik-d1357e.netlify.app');
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
-
+}));
+app.use(cookieParser());
 
 // Routes
 app.use('/users', userRouter);
