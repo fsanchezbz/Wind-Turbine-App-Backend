@@ -26,7 +26,8 @@ app.use(cookieParser());
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://profound-dasik-d1357e.netlify.app'
+    'https://profound-dasik-d1357e.netlify.app',
+    res.header("Access-Control-Allow-Origin")
   ],
   credentials: true,
   optionSuccessStatus: 200
