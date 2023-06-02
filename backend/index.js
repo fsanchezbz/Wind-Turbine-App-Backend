@@ -26,7 +26,8 @@ app.use(cookieParser());
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    '/https:\/\/profound-dasik-d1357e\.netlify\.app'
+    'https://profound-dasik-d1357e.netlify.app',
+    '*'
   ],
   credentials: true,
   optionSuccessStatus: 200
@@ -34,12 +35,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173", '/https:\/\/profound-dasik-d1357e\.netlify\.app');
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173", 'https://profound-dasik-d1357e.netlify.app', '*');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
-///    /https:\/\/wd37-rubber-ducks\.netlify\.app/,
 
 // Routes
 app.use('/users', userRouter);
