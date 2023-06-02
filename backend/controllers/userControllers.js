@@ -93,7 +93,15 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-
+// // Delete a user
+const deleteUser = async (req, res, next) => {
+  try {
+    await User.deleteOne({ _id: req.params.id });
+    res.json({ message: 'User deleted' });
+  } catch (error) {
+    next(error);
+  }
+};
 
 
 const getAllUsers = async (req, res, next) => {
@@ -125,4 +133,4 @@ const logout = (req, res, next) => {
   }
 };
 
-module.exports = { login, getOneUser, createUser, logout, getAllUsers,  updateUser  };
+module.exports = { login, getOneUser, createUser, logout, getAllUsers,  updateUser, deleteUser };

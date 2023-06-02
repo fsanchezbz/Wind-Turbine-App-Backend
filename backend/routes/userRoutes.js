@@ -5,7 +5,8 @@ const {
   createUser,
   getAllUsers,
   logout,
-  updateUser
+  updateUser,
+  deleteUser
 } = require('../controllers/userControllers');
 const checkToken = require('../middlewares/checkToken');
 
@@ -15,6 +16,6 @@ userRouter.route('/signup').post(createUser);
 userRouter.route('/me').get(checkToken, getOneUser);
 userRouter.route('/all').get(getAllUsers);
 userRouter.route('/update/:id').put(updateUser);
-
+userRouter.route('/delete/:id').delete(deleteUser);
 
 module.exports = userRouter;
