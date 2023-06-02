@@ -1,3 +1,15 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
+const emailPassword = process.env.EMAIL_PASSWORD;
+const emailAddress = process.env.EMAIL_ADDRESS;
+const app = express();
+const port = process.env.PORT || 5005;
+require('./db')();
+const userRouter = require('./routes/userRoutes');
+const workRouter = require('./routes/workOrderRouter');
+// const uploadRouter = require('./routes/uploadRouter');
+const errorHandler = require('./middlewares/errorHandler');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const http = require('http');
@@ -11,12 +23,20 @@ app.use(cookieParser());
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://profound-dasik-d1357e.netlify.app'
+    'https://profound-dasik-d1357e.netlify.app',
+    '*'
   ],
   credentials: true,
   optionSuccessStatus: 200
 };
 app.use(cors(corsOptions));
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173", 'https://profound-dasik-d1357e.netlify.app', '*');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 
 // Routes
 app.use('/users', userRouter);
