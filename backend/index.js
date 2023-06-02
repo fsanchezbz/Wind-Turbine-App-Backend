@@ -8,7 +8,7 @@ const port = process.env.PORT || 5005;
 require('./db')();
 const userRouter = require('./routes/userRoutes');
 const workRouter = require('./routes/workOrderRouter');
-const uploadRouter = require('./routes/uploadRouter');
+// const uploadRouter = require('./routes/uploadRouter');
 const errorHandler = require('./middlewares/errorHandler');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -36,7 +36,7 @@ app.use(cors(corsOptions));
 // Routes
 app.use('/users', userRouter);
 app.use('/work', workRouter);
-app.use('/pdf', uploadRouter)
+// app.use('/pdf', uploadRouter)
 
 // Error handling
 app.use(errorHandler);
