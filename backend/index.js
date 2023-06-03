@@ -32,18 +32,18 @@ app.use(cookieParser());
 // };
 // app.use(cors(corsOptions));
 
-app.use(cors());
-const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'https://profound-dasik-d1357e.netlify.app'
-  ],
-  credentials: true
-};
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173',
+      'https://profound-dasik-d1357e.netlify.app'
+      
+    ],
+    credentials: true,
+    optionSuccessStatus:200
 
-
-
+  })
+); 
 
 // Routes
 app.use('/users', userRouter);
@@ -57,7 +57,7 @@ const server = http.createServer(app);
 
 // Initialize Socket.IO
 const io = new Server(server, {
-  cors: corsOptions
+  cors: cors
 });
 
 // Socket.IO event handling
