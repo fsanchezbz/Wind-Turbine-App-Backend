@@ -66,7 +66,7 @@ const server = http.createServer(app);
 
 // Initialize Socket.IO
 const io = new Server(server, {
-  cors: cors
+  cors: corsOptions
 });
 
 // Socket.IO event handling
