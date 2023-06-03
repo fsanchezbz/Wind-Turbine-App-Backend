@@ -23,14 +23,12 @@ app.use(cookieParser());
 
 // CORS configuration
 const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'https://profound-dasik-d1357e.netlify.app'
-  ],
+  origin: '*',
   credentials: true,
   optionSuccessStatus: 200
 };
 app.use(cors(corsOptions));
+
 
 // Routes
 app.use('/users', userRouter);
