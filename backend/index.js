@@ -31,11 +31,11 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173", 'https://profound-dasik-d1357e.netlify.app', '*');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:5173", 'https://profound-dasik-d1357e.netlify.app', '*');
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 
 // Routes
