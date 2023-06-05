@@ -82,16 +82,20 @@ const updateUser = async (req, res, next) => {
     if (isAdmin !== undefined) updatedFields.isAdmin = isAdmin;
     if (status) updatedFields.status = status;
     if (profileImage) updatedFields.profileImage = profileImage;
+    
+    //findOneAndUpdate //{new: false}
 
     const updatedUser = await User.findByIdAndUpdate(id, updatedFields, { new: true });
 
     console.log('Updated user:', updatedUser);
 
     res.status(200).json(updatedUser);
+
   } catch (error) {
     next(error);
   }
 };
+
 
 // // Delete a user
 const deleteUser = async (req, res, next) => {

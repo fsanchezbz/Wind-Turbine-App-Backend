@@ -1,36 +1,46 @@
+
 // // workUploadRouter.js
 // const express = require('express');
 // const multer = require('multer');
-// const PDF = require('../models/pdfSchema');
+// const PNG = require('../models/pngSchema');
 
 // const workUploadRouter = express.Router();
-// const upload = multer({ dest: 'uploads/' });
+// const upload = multer();
 
-// const { uploadPDF, getAllPDFs } = require('../controllers/pdfController');
-
-// // workUploadRouter.use(express.static('uploads'));
-
-// // Route for uploading PDF
-// workUploadRouter.post('/upload-pdf', upload.array('pdfs'), uploadPDF);
-
-// // Route for getting all PDF files
-// workUploadRouter.get('/all', getAllPDFs);
-
-// // Route for fetching PDF by ID
+// // Route for fetching PNG by ID
 // workUploadRouter.get('/file/:id', async (req, res) => {
 //   try {
-//     const pdfId = req.params.id;
-//     const pdf = await PDF.findById(pdfId);
+//     const pngId = req.params.id;
+//     const png = await PNG.findById(pngId);
 
-//     if (!pdf) {
-//       return res.status(404).json({ message: 'PDF not found' });
+//     if (!png) {
+//       return res.status(404).json({ message: 'PNG not found' });
 //     }
 
-//     res.json(pdf);
+//     res.json(png.image);
 //   } catch (error) {
-//     console.error('Error fetching PDF:', error);
-//     res.status(500).json({ message: 'Error fetching PDF', error: error.message });
+//     console.error('Error fetching PNG:', error);
+//     res.status(500).json({ message: 'Error fetching PNG', error: error.message });
 //   }
 // });
+
+// workUploadRouter.post('/file', upload.single('file'), async (req, res) => {
+//     try {
+//       const { originalname, buffer } = req.file;
+  
+//       // Create a new PNG document
+//       const png = new PNG({
+//         image: buffer.toString('base64'), // Convert buffer to base64 string
+//       });
+  
+//       // Save the PNG document to the database
+//       const savedPNG = await png.save();
+  
+//       res.status(201).json({ message: 'PNG uploaded successfully', png: savedPNG });
+//     } catch (error) {
+//       console.error('Error uploading PNG:', error);
+//       res.status(500).json({ message: 'Error uploading PNG', error: error.message });
+//     }
+//   });
 
 // module.exports = workUploadRouter;

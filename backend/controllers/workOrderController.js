@@ -64,10 +64,12 @@ const updateWorkOrder = async (req, res) => {
     workOrder.image =req.body.image || workOrder.image;
     const updatedWorkOrder = await workOrder.save();
     res.json(updatedWorkOrder);
+
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
+
 
 // Delete a work order
 const deleteWorkOrder = async (req, res) => {

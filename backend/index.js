@@ -13,6 +13,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const http = require('http');
 const { Server } = require('socket.io');
+const PNG = require('./models/pngSchema');
 
 // Greet on root route
 app.get('/', (req, res) => res.send('2023 PJ TurbinePro GmbH. All rights reserved.'));
@@ -57,6 +58,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/users', userRouter);
 app.use('/work', workRouter);
+
 
 // Error handling
 app.use(errorHandler);
@@ -126,6 +128,38 @@ app.post('/send-notification', (req, res) => {
     }
   });
 });
+
+app.post('/png/file', async (req, res) => {
+  try {
+    const { imageUrl } = req.body;
+
+    // Create a new PNG document in the database
+    const png = new PNG({ image: imageUrl });
+    const savedPNG = await png.save();
+
+    res.json({ png: savedPNG });
+  } catch (error) {
+    console.error('Error uploading PNG file:', error);
+    res.status(500).json({ message: 'Error uploading PNG file', error: error.message });
+  }
+});
+
+app.get('/png/file/:id', async (req, res) => {
+  try {
+    const pngId = req.params.id;
+    const png = await PNG.findById(pngId);
+
+    if (!png) {
+      return res.status(404).json({ message: 'PNG not found' });
+    }
+
+    res.json(png.image);
+  } catch (error) {
+    console.error('Error fetching PNG:', error);
+    res.status(500).json({ message: 'Error fetching PNG', error: error.message });
+  }
+});
+
 
 // Start the server
 server.listen(port, () => console.log(`Server up on port http://localhost/${port}`));
