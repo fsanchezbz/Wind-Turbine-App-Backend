@@ -62,6 +62,7 @@ const updateWorkOrder = async (req, res) => {
     workOrder.addInfo = req.body.addInfo || workOrder.addInfo;
     workOrder.status = req.body.status || workOrder.status;
     workOrder.image =req.body.image || workOrder.image;
+    workOrder.update =req.body.update || workOrder.update;
     const updatedWorkOrder = await workOrder.save();
     res.json(updatedWorkOrder);
 
