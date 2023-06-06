@@ -87,8 +87,6 @@ const updateUser = async (req, res, next) => {
 
     const updatedUser = await User.findByIdAndUpdate(id, updatedFields, { new: true });
 
-    console.log('Updated user:', updatedUser);
-
     res.status(200).json(updatedUser);
 
   } catch (error) {
@@ -128,7 +126,6 @@ const getOneUser = async (req, res, next) => {
 
 const logout = (req, res, next) => {
   try {
-    console.log('clearCookie');
     res
       .clearCookie('token', { path: '/', sameSite: 'none', secure: true })
       .sendStatus(200);
