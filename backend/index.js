@@ -96,8 +96,8 @@ app.post('/send-notification', (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: emailAddress,
-      pass: emailPassword,
+      user: 'plktzjilukcehgop',
+      pass: 'boydjared508@gmail.com',
     },
     debug: true, // Enable debugging
     logger: true, // Enable logging
