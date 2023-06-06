@@ -136,7 +136,7 @@ app.post('/png/file', async (req, res) => {
 
     res.json({ png: savedPNG });
   } catch (error) {
-    console.error('Error uploading PNG file:', error);
+    // console.error('Error uploading PNG file:', error);
     res.status(500).json({ message: 'Error uploading PNG file', error: error.message });
   }
 });
@@ -152,7 +152,7 @@ app.get('/png/file/:id', async (req, res) => {
 
     res.json(png.image);
   } catch (error) {
-    console.error('Error fetching PNG:', error);
+    // console.error('Error fetching PNG:', error);
     res.status(500).json({ message: 'Error fetching PNG', error: error.message });
   }
 });
