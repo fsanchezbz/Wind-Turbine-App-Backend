@@ -99,6 +99,8 @@ app.post('/send-notification', (req, res) => {
       user: emailAddress,
       pass: emailPassword,
     },
+    debug: true, // Enable debugging
+    logger: true, // Enable logging
   });
 
   // Setup email data
