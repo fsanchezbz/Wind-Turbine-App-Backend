@@ -14,10 +14,6 @@ const login = async (req, res, next) => {
     const compare = await bcrypt.compare(password, findUser.password);
     if (!compare) throw new ErrorStatus('Password does not match!', 401);
 
-    // Update the status of the user to true
-    findUser.status = true;
-    await findUser.save();
-
     const token = jwt.sign({ _id: findUser._id, isAdmin: findUser.isAdmin, status: findUser.status }, process.env.JWT_SECRET);
 
     return res
